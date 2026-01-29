@@ -18,6 +18,12 @@
   dbus,
   udev,
   python3,
+  glib,
+  cairo,
+  gdk-pixbuf,
+  pango,
+  gtk4,
+  webkitgtk_6_0,
   # o365
   teams-for-linux,
   gnugrep,
@@ -82,6 +88,12 @@ rustPlatform.buildRustPackage (finalAttrs: {
     pam
     dbus.dev
     udev.dev
+    glib
+    cairo
+    gdk-pixbuf
+    pango
+    gtk4
+    webkitgtk_6_0
   ];
 
   env = lib.attrsets.optionalAttrs (!withSelinux) {
