@@ -82,12 +82,22 @@ in
         description = "Which PAM services to add the himmelblau module to.";
       };
 
+      greeter = {
+        enable = lib.mkEnableOption "Himmelblau greetd greeter";
+
+        greeterPackage = lib.mkOption {
+          type = lib.types.package;
+          description = "Package providing himmelblau-greeter.";
+      };
+
       # Note: settings options are now defined in himmelblau-options.nix
       # which is auto-generated from docs-xml/ by scripts/gen_param_code.py
     };
   };
 
   config = lib.mkIf cfg.enable {
+    imports = [ ./himmelblau-greeter.nix ];
+
     environment.etc."krb5.conf.d/krb5_himmelblau.conf".source = ../../src/config/krb5_himmelblau.conf;
     environment.etc."himmelblau/himmelblau.conf".source = configFile;
 
@@ -227,5 +237,4 @@ in
         };
       };
   };
-
 }
