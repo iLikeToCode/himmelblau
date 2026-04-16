@@ -833,6 +833,28 @@ impl HimmelblauConfig {
         }
         res
     }
+
+    pub fn get_oidc_scopes(&self) -> Vec<String> {
+        let mut oidc_scopes: Vec<String> = vec![];
+        for section in self.config.sections() {
+            oidc_scopes.extend(match self.config.get(&section, "oidc_scopes") {
+                Some(val) => val.split(',').map(|s| s.trim().to_string()).collect(),
+                None => vec![],
+            });
+        }
+        oidc_scopes
+    }
+
+    pub fn get_oidc_username_claims(&self) -> Vec<String> {
+        let mut oidc_username_claims: Vec<String> = vec![];
+        for section in self.config.sections() {
+            oidc_username_claims.extend(match self.config.get(&section, "oidc_username_claims") {
+                Some(val) => val.split(',').map(|s| s.trim().to_string()).collect(),
+                None => vec![],
+            });
+        }
+        oidc_username_claims
+    }
 }
 
 // Generated getter methods from XML parameter definitions.
