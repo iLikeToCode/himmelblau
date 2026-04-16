@@ -1829,6 +1829,25 @@ mod tests {
     }
 
     #[test]
+    fn test_get_oidc_scopes() {
+        let config_data = r#"
+        [global]
+        oidc_scopes = openid, profile
+        "#;
+
+        let temp_file = create_temp_config(config_data);
+        let config = HimmelblauConfig::new(Some(&temp_file)).unwrap();
+
+        let scopes = config.get_oidc_scopes();
+        let expected_scopes: Vec<String> = vec![
+            "openid".to_string(),
+            "profile".to_string(),
+        ];
+
+        assert_eq!(scopes, expected_scopes);
+    }
+
+    #[test]
     fn test_user_map_file() {
         let config_data = r#"
         [global]
